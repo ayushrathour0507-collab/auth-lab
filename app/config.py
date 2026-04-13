@@ -1,8 +1,10 @@
+import secrets
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./auth_app.db"
-    SECRET_KEY: str = "your-super-secret-key-change-this-in-production"
+    # Use env SECRET_KEY in real deployments; this avoids hardcoding secrets in code.
+    SECRET_KEY: str = secrets.token_urlsafe(64)
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
