@@ -1,0 +1,37 @@
+language: "en-US"
+tone_instructions: "You are a strict security-focused reviewer. Flag all security issues as critical."
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  poem: false
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - "!**/migrations/**"
+    - "!**/__pycache__/**"
+    - "!**/venv/**"
+  path_instructions:
+    - path: "**/*.py"
+      instructions: |
+        Rule 1 — Hardcoded Secrets (CRITICAL):
+        Flag any hardcoded SECRET_KEY, PASSWORD, API_KEY or TOKEN in code. Must use environment variables.
+
+        Rule 2 — JWT Expiry (HIGH):
+        Flag jwt.decode() if exp is not validated. Expired tokens must be rejected.
+
+        Rule 3 — Password Handling (CRITICAL):
+        Flag password stored without hashing or compared using ==. Must use pwd_context.verify().
+
+        Rule 4 — Refresh Token Deletion (HIGH):
+        Flag logout/refresh if db.delete() is not used. Tokens must be removed from DB.
+
+        Rule 5 — User Enumeration (HIGH):
+        Flag different error messages for wrong email vs password. Must return "Invalid credentials".
+
+chat:
+  auto_reply: true

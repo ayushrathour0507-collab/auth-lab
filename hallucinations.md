@@ -25,4 +25,4 @@
 ## Notes
 
 - Missing token binding: fixed by validating token type for access tokens and binding refresh-token operations to the correct user.
-- No rate limiting: not implemented in this lab code yet (outside the listed fixed items above).
+- No rate limiting: fixed with in-memory request limiting on auth-sensitive endpoints.
